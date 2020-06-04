@@ -29,6 +29,7 @@ from utilities import (create_folder, get_filename, create_logging,
     StatisticsContainer)
 import config
 import traceback
+import gc
 
 class Transfer_Cnn14(nn.Module):
     def __init__(self, sample_rate, window_size, hop_size, mel_bins, fmin, 
