@@ -182,14 +182,14 @@ def train(args):
 
     # Train sampler
     (train_sampler, train_collector) = get_train_sampler(balanced, augmentation,
-        'hdf5s/indexes/balanced_train.h5', black_list_csv, batch_size)
+        workspace_input + 'hdf5s/indexes/balanced_train.h5', black_list_csv, batch_size)
     
     # Evaluate sampler
     eval_bal_sampler = EvaluateSampler(
-        indexes_hdf5_path='hdf5s/indexes/balanced_train.h5', batch_size=batch_size)
+        indexes_hdf5_path=workspace_input + 'hdf5s/indexes/balanced_train.h5', batch_size=batch_size)
 
     eval_test_sampler = EvaluateSampler(
-        indexes_hdf5_path='hdf5s/indexes/eval.h5', batch_size=batch_size)
+        indexes_hdf5_path=workspace_input + 'hdf5s/indexes/eval.h5', batch_size=batch_size)
 
     eval_collector = Collator(mixup_alpha=None)
     
