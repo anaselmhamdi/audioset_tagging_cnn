@@ -81,6 +81,7 @@ def train(args):
     model_type = args.model_type
     pretrained_checkpoint_path = args.pretrained_checkpoint_path
     freeze_base = args.freeze_base
+    freeze_base = True
     device = 'cuda' if (args.cuda and torch.cuda.is_available()) else 'cpu'
     sample_rate = config.sample_rate
     classes_num = config.classes_num
