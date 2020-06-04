@@ -146,7 +146,7 @@ def train(args):
     loss_type = 'clip_bce'
     balanced = 'balanced'
     augmentation = 'none'
-    batch_size = 16
+    batch_size = 8
     learning_rate = 1e-3
     resume_iteration = 0
     early_stop = 100000
