@@ -219,7 +219,7 @@ def train(args):
 
     train_bgn_time = time.time()
     if resume_iteration > 0:
-        resume_checkpoint_path = os.path.join(workspace, 'checkpoints', filename, 
+        resume_checkpoint_path = os.path.join(workspace_input, 'checkpoints', filename, 
             'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
             sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
             'data_type={}'.format(data_type), model_type, 
