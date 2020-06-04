@@ -51,7 +51,7 @@ def get_train_sampler(balanced, augmentation, train_indexes_hdf5_path,
       train_collector: object
     """
     if balanced == 'none':
-        train_sampler = Sampler(indexes_hdf5_path=train_indexes_hdf5_path[:round(len(train_indexes_hdf5_path)*0.75]), 
+        train_sampler = Sampler(indexes_hdf5_path=train_indexes_hdf5_path[:round(len(train_indexes_hdf5_path)*0.75)], 
             black_list_csv=black_list_csv, batch_size=batch_size)
         train_collector = Collator(mixup_alpha=None)
 
