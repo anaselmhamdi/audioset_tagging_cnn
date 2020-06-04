@@ -105,7 +105,7 @@ def train(args):
 
     print('Load pretrained model successfully!')
     ###############Copying main.py####################
-    workspace = ''
+    workspace = args.workspace
     data_type = 'balanced_train'
     loss_type = 'clip_bce'
     balanced = 'balanced'
@@ -346,6 +346,7 @@ if __name__ == '__main__':
 
     # Train
     parser_train = subparsers.add_parser('train')
+    parser_train.add_argument('--workspace', type=str, required=True, default='')
     parser_train.add_argument('--window_size', type=int, required=True)
     parser_train.add_argument('--hop_size', type=int, required=True)
     parser_train.add_argument('--mel_bins', type=int, required=True)
