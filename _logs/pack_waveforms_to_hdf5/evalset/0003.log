@@ -1,0 +1,7 @@
+Sun, 31 May 2020 22:41:43 dataset.py[line:153] INFO Write logs to _logs/pack_waveforms_to_hdf5/evalset
+Sun, 31 May 2020 22:41:43 dataset.py[line:182] INFO 0 audios/content/test/bisping-00001-part43.wav
+Sun, 31 May 2020 22:41:44 dataset.py[line:182] INFO 1 audios/content/test/bisping-00064-part36.wav
+Sun, 31 May 2020 22:41:44 dataset.py[line:182] INFO 2 audios/content/test/bisping-00009-part5.wav
+Sun, 31 May 2020 22:41:45 dataset.py[line:182] INFO 3 audios/content/test/bisping-00047-part43.wav
+Sun, 31 May 2020 22:41:45 dataset.py[line:182] INFO 4 audios/content/test/bisping-00019-part118.wav
+Sun, 31 May 2020 22:41:46 dataset.py[line:182] INFO 5 audios/content/test/bisping-00059-part17.wav

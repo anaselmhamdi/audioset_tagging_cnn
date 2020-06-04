@@ -8,7 +8,7 @@ import pandas as pd
 from scipy import stats 
 import datetime
 import pickle
-
+import pandas as pd
 
 def create_folder(fd):
     if not os.path.exists(fd):
@@ -91,10 +91,33 @@ def read_metadata(csv_path, classes_num, id_to_ix):
     meta_dict = {'audio_name': np.array(audio_names), 'target': targets}
     return meta_dict
 
+def read_metadata_offline(csv_path, classes_num, id_to_ix):
+    df = pd.read_csv(csv_path).dropna()
+    audios_num = len(df)
+    targets = np.zeros((audios_num, classes_num), dtype=np.bool)
+    audios_names = []
+    for index, row in df.iterrows():
+        ix = id_to_ix[row['positive_labels']]
+        audios_names.append(row['path'])
+        targets[index, ix] = 1
+    meta_dict = {"audio_name":np.array(audios_names),"target":targets}
+    return meta_dict
 
 def float32_to_int16(x):
-    assert np.max(np.abs(x)) <= 1.
-    return (x * 32767.).astype(np.int16)
+    if np.max(np.abs(x)) > 1.:
+        flattened = []
+        for k in x:
+            if np.abs(k) <= 1:
+                flattened.append(k)
+            else:
+                print('Error : abs value >1')
+                if k > 0.:
+                    flattened.append(0.9888)
+                if k < 0.:
+                    flattened.append(-0.9888)
+        return (np.array(flattened) * 32767.).astype(np.int16)
+    else:
+        return (x * 32767.).astype(np.int16)
 
 def int16_to_float32(x):
     return (x / 32767.).astype(np.float32)

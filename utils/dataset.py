@@ -10,7 +10,7 @@ import h5py
 import librosa
 
 from utilities import (create_folder, get_filename, create_logging, 
-    float32_to_int16, pad_or_truncate, read_metadata)
+    float32_to_int16, pad_or_truncate, read_metadata,read_metadata_offline)
 import config
 
 
@@ -132,7 +132,7 @@ def pack_waveforms_to_hdf5(args):
     csv_path = args.csv_path
     waveforms_hdf5_path = args.waveforms_hdf5_path
     mini_data = args.mini_data
-
+    download_dataset = args.download_dataset
     clip_samples = config.clip_samples
     classes_num = config.classes_num
     sample_rate = config.sample_rate
@@ -153,7 +153,10 @@ def pack_waveforms_to_hdf5(args):
     logging.info('Write logs to {}'.format(logs_dir))
     
     # Read csv file
-    meta_dict = read_metadata(csv_path, classes_num, id_to_ix)
+    if download_dataset:
+        meta_dict = read_metadata(csv_path, classes_num, id_to_ix)
+    else:
+        meta_dict = read_metadata_offline(csv_path, classes_num, id_to_ix)
 
     if mini_data:
         mini_num = 10
@@ -204,8 +207,9 @@ if __name__ == '__main__':
     parser_download_wavs.add_argument('--mini_data', action='store_true', default=True, help='Set true to only download 10 audios for debugging.')
 
     parser_pack_wavs = subparsers.add_parser('pack_waveforms_to_hdf5')
-    parser_pack_wavs.add_argument('--csv_path', type=str, required=True, help='Path of csv file containing audio info to be downloaded.')
-    parser_pack_wavs.add_argument('--audios_dir', type=str, required=True, help='Directory to save out downloaded audio.')
+    parser_pack_wavs.add_argument('--csv_path', type=str,required=True, help='Path of csv file containing audio info.')
+    parser_pack_wavs.add_argument('--audios_dir', type=str, required=True, help='Directory to save out downloaded audio or to read audios')
+    parser_pack_wavs.add_argument('--download_dataset', type=bool, default=False, help='Whether you want to download dataset or not.')
     parser_pack_wavs.add_argument('--waveforms_hdf5_path', type=str, required=True, help='Path to save out packed hdf5.')
     parser_pack_wavs.add_argument('--mini_data', action='store_true', default=False, help='Set true to only download 10 audios for debugging.')
 

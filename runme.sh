@@ -39,12 +39,12 @@ for IDX in {00..40}; do
   python utils/dataset.py download_wavs --csv_path=$DATASET_DIR"/metadata/unbalanced_csvs/unbalanced_train_segments_part$IDX.csv" --audios_dir=$DATASET_DIR"/audios/unbalanced_train_segments/unbalanced_train_segments_part$IDX"
 done
 
-# ============ Pack waveform and target to hdf5 ============
+# ============ Pack waveform and target to hdf5 ============  
 # Pack evaluation waveforms to a single hdf5 file
-python3 utils/dataset.py pack_waveforms_to_hdf5 --csv_path=$DATASET_DIR"/metadata/eval_segments.csv" --audios_dir=$DATASET_DIR"/audios/eval_segments" --waveforms_hdf5_path=$WORKSPACE"/hdf5s/waveforms/eval.h5"
+python3 utils/dataset.py pack_waveforms_to_hdf5 --csv_path="metadata/evalset.csv" --audios_dir="audios/" --waveforms_hdf5_path="hdf5s/waveforms/eval.h5"
 
 # Pack balanced training waveforms to a single hdf5 file
-python3 utils/dataset.py pack_waveforms_to_hdf5 --csv_path=$DATASET_DIR"/metadata/balanced_train_segments.csv" --audios_dir=$DATASET_DIR"/audios/balanced_train_segments" --waveforms_hdf5_path=$WORKSPACE"/hdf5s/waveforms/balanced_train.h5"
+python3 utils/dataset.py pack_waveforms_to_hdf5 --csv_path="metadata/trainset.csv" --audios_dir="audios/" --waveforms_hdf5_path="hdf5s/waveforms/balanced_train.h5"
 
 # Pack unbalanced training waveforms to hdf5 files. Users may consider 
 # executing the following commands in parallel to speed up. One simple 
@@ -58,6 +58,7 @@ done
 # Balanced training indexes
 python3 utils/create_indexes.py create_indexes --waveforms_hdf5_path=$WORKSPACE"/hdf5s/waveforms/balanced_train.h5" --indexes_hdf5_path=$WORKSPACE"/hdf5s/indexes/balanced_train.h5"
 
+python3 utils/create_indexes.py create_indexes --waveforms_hdf5_path="hdf5s/waveforms/balanced_train.h5" --indexes_hdf5_path="hdf5s/indexes/balanced_train.h5" && python3 utils/create_indexes.py create_indexes --waveforms_hdf5_path="hdf5s/waveforms/eval.h5" --indexes_hdf5_path="hdf5s/indexes/eval.h5"
 # Unbalanced training indexes
 for IDX in {00..40}; do
     echo $IDX

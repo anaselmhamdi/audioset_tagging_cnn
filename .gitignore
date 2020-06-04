@@ -1,0 +1,9 @@
+# created by virtualenv automatically
+*.wav
+bin/
+env/
+*.pth
+*.h5
+*.pkl
+*.zip
+__pycache__

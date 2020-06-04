@@ -112,7 +112,6 @@ class Sampler(Base):
         """
         super(Sampler, self).__init__(indexes_hdf5_path, black_list_csv, 
             batch_size, random_seed)
-        
         self.indexes = np.arange(self.audios_num)
             
         # Shuffle indexes
@@ -183,7 +182,6 @@ class BalancedSampler(Base):
         """
         super(BalancedSampler, self).__init__(indexes_hdf5_path, black_list_csv, 
             batch_size, random_seed)
-        
         self.samples_num_per_class = np.sum(self.targets, axis=0)
         logging.info('samples_num_per_class: {}'.format(
             self.samples_num_per_class.astype(np.int32)))
@@ -195,7 +193,6 @@ class BalancedSampler(Base):
         for k in range(self.classes_num):
             self.indexes_per_class.append(
                 np.where(self.targets[:, k] == 1)[0])
-            
         # Shuffle indexes
         for k in range(self.classes_num):
             self.random_state.shuffle(self.indexes_per_class[k])
@@ -228,7 +225,6 @@ class BalancedSampler(Base):
             while i < batch_size:
                 if len(self.queue) == 0:
                     self.queue = self.expand_queue(self.queue)
-
                 class_id = self.queue.pop(0)
                 pointer = self.pointers_of_classes[class_id]
                 self.pointers_of_classes[class_id] += 1
@@ -241,6 +237,7 @@ class BalancedSampler(Base):
 
                 # If audio in black list then continue
                 if self.audio_names[index] in self.black_list_names:
+                    print('blacklist element')
                     continue
                 else:
                     batch_meta.append({
