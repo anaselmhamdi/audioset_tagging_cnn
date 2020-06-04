@@ -356,7 +356,7 @@ if __name__ == '__main__':
     parser_train.add_argument('--fmax', type=int, required=True) 
     parser_train.add_argument('--model_type', type=str, required=True)
     parser_train.add_argument('--pretrained_checkpoint_path', type=str)
-    parser_train.add_argument('--freeze_base', action='store_true', default=True)
+    parser_train.add_argument('--freeze_base', action='store_true', default=True, type=bool)
     parser_train.add_argument('--cuda', action='store_true', default=False)
 
     # Parse arguments
