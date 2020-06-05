@@ -105,7 +105,7 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
         """
         output_dict = self.base(input, mixup_lambda)
         x = output_dict['segmentwise_output']
-        framewise_output = torch.log_softmax(interpolate(self.fc_transfer(x),32), dim=-1)
+        framewise_output = torch.log_softmax(self.fc_transfer(x), dim=-1)
         output_dict['framewise_output'] = framewise_output
         return output_dict
 
