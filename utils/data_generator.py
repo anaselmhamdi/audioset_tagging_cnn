@@ -54,7 +54,7 @@ class AudioSetDataset(object):
             waveform = np.zeros((self.clip_samples,), dtype=np.float32)
             target = np.zeros((self.classes_num,), dtype=np.float32)
         else:
-            hdf5_path = '/kaggle/input/adskiphdf5/' + meta['hdf5_path']
+            hdf5_path = meta['hdf5_path']
             index_in_hdf5 = meta['index_in_hdf5']
 
             with h5py.File(hdf5_path, 'r') as hf:
