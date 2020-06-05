@@ -3025,6 +3025,6 @@ class Cnn14_DecisionLevelAtt(nn.Module):
 
         output_dict = {'framewise_output': framewise_output, 
             'clipwise_output': clipwise_output,
-            'segmentwise_output':segmentwise_output}
+            'x':x}
 
         return output_dict
