@@ -104,7 +104,7 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
         """Input: (batch_size, data_length)
         """
         output_dict = self.base(input, mixup_lambda)
-        print(output_dict['framewise_output'])
+        print(output_dict['framewise_output'].shape)
         return output_dict
 
 def train(args):
