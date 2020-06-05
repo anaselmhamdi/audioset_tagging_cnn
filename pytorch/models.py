@@ -2816,7 +2816,7 @@ class Cnn14_DecisionLevelMax(nn.Module):
         framewise_output = pad_framewise_output(framewise_output, frames_num)
 
         output_dict = {'framewise_output': framewise_output, 
-        "x":x
+        "x":x,
             'clipwise_output': clipwise_output}
 
         return output_dict
