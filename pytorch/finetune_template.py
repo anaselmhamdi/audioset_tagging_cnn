@@ -38,7 +38,7 @@ class Transfer_Cnn14(nn.Module):
         """
         super(Transfer_Cnn14, self).__init__()
         audioset_classes_num = 527
-        
+        bal
         self.base = Cnn14(sample_rate, window_size, hop_size, mel_bins, fmin, 
             fmax, audioset_classes_num)
 
@@ -95,14 +95,18 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
         init_layer(self.fc_transfer)
 
     def load_from_pretrain(self, pretrained_checkpoint_path):
-        checkpoint = torch.load(pretrained_checkpoint_path)
+        if torch.cuda.is_available():
+            checkpoint = torch.load(pretrained_checkpoint_path)
+        else:
+            checkpoint = torch.load(pretrained_checkpoint_path, map_location='gpu')
         self.base.load_state_dict(checkpoint['model'])
 
     def forward(self, input, mixup_lambda=None):
         """Input: (batch_size, data_length)
         """
         output_dict = self.base(input, mixup_lambda)
- 
+        clipwise_output =  torch.log_softmax(self.fc_transfer(embedding), dim=-1)
+        output_dict['clipwise_output'] = clipwise_output
         return output_dict
 
 def train(args):
@@ -264,7 +268,10 @@ def train(args):
             '{}_iterations.pth'.format(resume_iteration))
 
         logging.info('Loading checkpoint {}'.format(resume_checkpoint_path))
-        checkpoint = torch.load(resume_checkpoint_path)
+        if torch.cuda.is_available():
+            checkpoint = torch.load(resume_checkpoint_path)
+        else:
+            checkpoint = torch.load(resume_checkpoint_path, map_location='cpu')
         model.load_state_dict(checkpoint['model'])
         train_sampler.load_state_dict(checkpoint['sampler'])
         statistics_container.load_state_dict(resume_iteration)
