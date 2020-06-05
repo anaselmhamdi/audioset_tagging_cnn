@@ -3023,8 +3023,7 @@ class Cnn14_DecisionLevelAtt(nn.Module):
         framewise_output = interpolate(segmentwise_output, self.interpolate_ratio)
         framewise_output = pad_framewise_output(framewise_output, frames_num)
 
-        output_dict = {'framewise_output': framewise_output, 
-        'segmentwise_output':segmentwise_output,
+        output_dict = {'framewise_output': framewise_output,
             'clipwise_output': clipwise_output}
 
         return output_dict
