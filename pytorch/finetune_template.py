@@ -104,7 +104,7 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
         """Input: (batch_size, data_length)
         """
         output_dict = self.base(input, mixup_lambda)
-        output_dict['framewise_output'] =  torch.log_softmax(self.fc_transfer((1001,1,527)), dim=-1)
+        output_dict['framewise_output'] =  torch.log_softmax(self.fc_transfer(torch.Size([1001,1,527])), dim=-1)
         return output_dict
 
 def train(args):
