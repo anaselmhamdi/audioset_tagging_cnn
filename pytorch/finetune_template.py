@@ -81,7 +81,7 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
             fmax, audioset_classes_num)
 
         # Transfer to another task layer
-        self.fc_transfer = AttBlock(2048, classes_num, activation='sigmoid')
+        self.fc_transfer = nn.Linear(2048, classes_num, bias=True)
 
         if freeze_base:
             # Freeze AudioSet pretrained layers
@@ -104,6 +104,7 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
         """Input: (batch_size, data_length)
         """
         output_dict = self.base(input, mixup_lambda)
+        #AttBlock(2048, classes_num, activation='sigmoid')
         output_dict['framewise_output'] =  torch.log_softmax(self.fc_transfer(output_dict['x']), dim=-1)
         return output_dict
 
