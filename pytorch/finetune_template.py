@@ -38,7 +38,6 @@ class Transfer_Cnn14(nn.Module):
         """
         super(Transfer_Cnn14, self).__init__()
         audioset_classes_num = 527
-        bal
         self.base = Cnn14(sample_rate, window_size, hop_size, mel_bins, fmin, 
             fmax, audioset_classes_num)
 
@@ -105,8 +104,8 @@ class Transfer_Cnn14_DecisionLevelAtt(nn.Module):
         """Input: (batch_size, data_length)
         """
         output_dict = self.base(input, mixup_lambda)
-        clipwise_output = output_dict['clipwise_output']
-        framewise_output =  torch.log_softmax(self.fc_transfer(clipwise_output), dim=-1)
+        segmentwise_output = output_dict['segmentwise_output']
+        framewise_output = torch.log_softmax(self.fc_transfer(segmentwise_output), dim=-1)
         output_dict['framewise_output'] = framewise_output
         return output_dict
 
