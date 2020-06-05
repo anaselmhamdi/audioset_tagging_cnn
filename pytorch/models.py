@@ -3024,7 +3024,6 @@ class Cnn14_DecisionLevelAtt(nn.Module):
         framewise_output = pad_framewise_output(framewise_output, frames_num)
 
         output_dict = {'framewise_output': framewise_output, 
-            'clipwise_output': clipwise_output,
-            'x':x}
+            'clipwise_output': clipwise_output}
 
         return output_dict
