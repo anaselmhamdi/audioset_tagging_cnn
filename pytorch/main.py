@@ -110,7 +110,8 @@ def train(args):
     """
 
     # Arugments & parameters
-    workspace = args.workspace
+    workspace_input = args.workspace_input
+    workspace_output = args.workspace_output
     data_type = args.data_type
     window_size = args.window_size
     hop_size = args.hop_size
