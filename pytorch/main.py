@@ -377,7 +377,8 @@ def train_model(args):
     """
 
     # Arugments & parameters
-    workspace = args.workspace
+    workspace_input = args.workspace_input
+    workspace_output = args.workspace_output
     data_type = args.data_type
     window_size = args.window_size
     hop_size = args.hop_size
@@ -402,18 +403,18 @@ def train_model(args):
     loss_func = get_loss_func(loss_type)
 
     # Paths
-    black_list_csv = os.path.join(workspace, 'black_list', 'dcase2017task4.csv')
+    black_list_csv = 'metadata/black_list/groundtruth_weak_label_evaluation_set.csv'
     
-    train_indexes_hdf5_path = os.path.join(workspace, 'hdf5s', 'indexes', 
+    train_indexes_hdf5_path = os.path.join(workspace_input, 'hdf5s', 'indexes', 
         '{}.h5'.format(data_type))
 
-    eval_bal_indexes_hdf5_path = os.path.join(workspace, 
+    eval_bal_indexes_hdf5_path = os.path.join(workspace_input, 
         'hdf5s', 'indexes', 'balanced_train.h5')
 
-    eval_test_indexes_hdf5_path = os.path.join(workspace, 'hdf5s', 'indexes', 
+    eval_test_indexes_hdf5_path = os.path.join(workspace_input, 'hdf5s', 'indexes', 
         'eval.h5')
 
-    checkpoints_dir = os.path.join(workspace, 'checkpoints', filename, 
+    checkpoints_dir = os.path.join(workspace_output, 'checkpoints', filename, 
         'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
         sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
         'data_type={}'.format(data_type), model_type, 
@@ -421,7 +422,7 @@ def train_model(args):
         'augmentation={}'.format(augmentation), 'batch_size={}'.format(batch_size))
     create_folder(checkpoints_dir)
     
-    statistics_path = os.path.join(workspace, 'statistics', filename, 
+    statistics_path = os.path.join(workspace_output, 'statistics', filename, 
         'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
         sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
         'data_type={}'.format(data_type), model_type, 
@@ -430,7 +431,7 @@ def train_model(args):
         'statistics.pkl')
     create_folder(os.path.dirname(statistics_path))
 
-    logs_dir = os.path.join(workspace, 'logs', filename, 
+    logs_dir = os.path.join(workspace_output, 'logs', filename, 
         'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
         sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
         'data_type={}'.format(data_type), model_type, 
@@ -503,7 +504,7 @@ def train_model(args):
     
     # Resume training
     if resume_iteration > 0:
-        resume_checkpoint_path = os.path.join(workspace, 'checkpoints', filename, 
+        resume_checkpoint_path = os.path.join(workspace_output, 'checkpoints', filename, 
             'sample_rate={},window_size={},hop_size={},mel_bins={},fmin={},fmax={}'.format(
             sample_rate, window_size, hop_size, mel_bins, fmin, fmax), 
             'data_type={}'.format(data_type), model_type, 
@@ -629,7 +630,8 @@ if __name__ == '__main__':
     subparsers = parser.add_subparsers(dest='mode')
 
     parser_train = subparsers.add_parser('train') 
-    parser_train.add_argument('--workspace', type=str, required=True)
+    parser_train.add_argument('--workspace_input', type=str, required=True, default='')
+    parser_train.add_argument('--workspace_output', type=str, required=True, default='')
     parser_train.add_argument('--data_type', type=str, required=True)
     parser_train.add_argument('--window_size', type=int, required=True)
     parser_train.add_argument('--hop_size', type=int, required=True)
