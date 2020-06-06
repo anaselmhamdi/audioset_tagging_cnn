@@ -3018,7 +3018,6 @@ class Cnn14_DecisionLevelAtt(nn.Module):
         x = x.transpose(1, 2)
         x = F.dropout(x, p=0.5, training=self.training)
         (clipwise_output, a, segmentwise_output) = self.att_block(x)
-        print(clipwise_output.shape, a.shape, segmentwise_output.shape)
         segmentwise_output = segmentwise_output.transpose(1, 2)
 
         # Get framewise output
